@@ -25,13 +25,13 @@ jobs:
 
       - name: Build, tag and scan docker image
         run: |
-          docker build -t dhutsj/test:$IMAGE_TAG .
+          docker build -t dhutsj/test:${{ env.IMAGE_TAG }} .
         #   docker push dhutsj/test:$IMAGE_TAG
       - name: Docker Scout
         id: docker-scout
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: dhutsj/test:$IMAGE_TAG
+          image: dhutsj/test:${{ env.IMAGE_TAG }}
           only-severities: critical,high
           exit-code: true
