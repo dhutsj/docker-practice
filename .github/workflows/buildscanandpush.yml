@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: docker.io
-
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   build:
@@ -24,8 +24,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build, tag and scan docker image
-        env:
-          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t dhutsj/test:$IMAGE_TAG .
         #   docker push dhutsj/test:$IMAGE_TAG
