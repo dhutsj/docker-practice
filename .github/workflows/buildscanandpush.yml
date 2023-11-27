@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+  pull_request:
 
 env:
   REGISTRY: docker.io
@@ -23,7 +24,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build, tag and scan docker image
+      - name: Build, tag docker image
         run: |
           docker build -t dhutsj/test:${{ env.IMAGE_TAG }} .
         #   docker push dhutsj/test:$IMAGE_TAG
