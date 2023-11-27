@@ -1,4 +1,4 @@
-name: jd-optimizer (dev)
+name: docker-build-scan
 
 on:
   push:
@@ -17,6 +17,12 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t dhutsj/test:$IMAGE_TAG .
-          docker scout cves dhutsj/test:$IMAGE_TAG
-          docker scout recommendations dhutsj/test:$IMAGE_TAG
         #   docker push dhutsj/test:$IMAGE_TAG
+      - name: Docker Scout
+        id: docker-scout
+        uses: docker/scout-action@v1
+        with:
+            command: cves
+            image: dhutsj/test:$IMAGE_TAG
+            only-severities: critical,high
+            exit-code: true
